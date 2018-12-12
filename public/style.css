@@ -1,0 +1,19 @@
+body {
+    min-height: 100vh;
+}
+
+.querying-block {
+    min-height: 25vh;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.rs-loading {
+    padding: 5px;
+    color: white;
+    background: black;
+    box-shadow: 0 0 15px black;
+    border: 1px solid white;
+}

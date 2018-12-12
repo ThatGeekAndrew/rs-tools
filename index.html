@@ -1,0 +1,116 @@
+<html>
+
+<head>
+    <title>RS Toolkit | by andrews.codes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body ng-app="testApp">
+    <header class="sticky-top">
+        <div class="collapse bg-dark" id="navbarHeader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h4 class="text-white">About</h4>
+                        <p class="text-muted">I really just wanted a better designed Hiscore lookup tool, so I skinned a few of the APIs that are on NPM. Come to find that nearly every one of them have a bug of some kind. Imagine that?</p>
+                    </div>
+                    <div class="col-sm-4 offset-md-1 py-4">
+                        <h4 class="text-white">Contact</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="https://andrews.codes/" class="text-white">My Website</a></li>
+                            <li><a href="https://twitter.com/geeksmarter" class="text-white">Twitter</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container d-flex justify-content-between">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <img class="mr-2" src="https://oldschool.runescape.wiki/images/b/bd/Stats_icon.png" alt="">
+                    <strong>RS Toolkit</strong>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
+                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main role="main" ng-controller="OSRSLookupCtrl">
+
+        <section class="jumbotron jumbotron-fluid text-center">
+            <div class="container">
+                <form ng-submit="callAPI(username)" class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                        <i class="fas fa-trophy"></i>
+                        <span class="input-group-text mr-3">OSRS Hiscores</span>
+                    </div>
+                    <input ng-model="username" type="text" class="form-control" placeholder="Lookup OSRS Username" aria-label="Lookup OSRS Username">
+                    <div class="input-group-append">
+                        
+                        <button type="submit" class="btn btn-lg btn-raised btn-primary px-3">Lookup</button>
+                        <button type="button" class="btn btn-lg btn-outline-primary px-2 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <h6 class="dropdown-header">Game</h6>
+                            <a class="dropdown-item" href="#">OSRS</a>
+                            <a class="dropdown-item" href="#">RS3</a>
+                            <div role="separator" class="dropdown-divider"></div>
+                            <h6 class="dropdown-header">Services</h6>
+                            <a class="dropdown-item" href="#">Exchange</a>
+                            <a class="dropdown-item" href="#">Hiscores</a>
+                            <a class="dropdown-item" href="#">Beastiary</a>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="querying-block" ng-if="querying">
+                    <div>
+                        <span class="rs-loading">Loading - Please Wait.</span>
+                    </div>
+                </div>
+                <h2 ng-if="highscores">{{ lookedup }}:</h2>
+                
+                <div class="row">
+                    <div class="col-3" ng-repeat="skill in highscores" title="XP {{ skill.xp | number }}">
+                        <img width="20px" ng-src="https://oldschool.runescape.wiki/images/8/86/Agility_icon.png" alt="">
+                        <strong>{{ skill.level }}</strong>
+                        <span ng-repeat-end>{{ skill.name }}</span>
+                    </div>
+                </div>
+
+                <pre>{{ highscores.skills | json }}</pre>
+                <hr>
+            </div>
+        </section>
+    </main>
+    <footer class="text-muted fixed-bottom">
+        <div class="container">
+            <p class="float-right">
+                <a href="#">Back to top</a>
+            </p>
+            <p>All images and data are &copy; Jagex Ltd. I am in no way affiliated, <a href="https://andrews.codes/" target="_blank">I am just a fan</a>.</p>
+        </div>
+    </footer>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+    <script src="/static/client.js"></script>
+</body>
+
+</html>

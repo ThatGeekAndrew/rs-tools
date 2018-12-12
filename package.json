@@ -1,0 +1,19 @@
+{
+  "name": "highscores",
+  "version": "1.0.0",
+  "description": "The API and website for an Old School Runescape Tool.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodejs server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "osrs-wrapper": "^1.0.4",
+    "path": "^0.12.7",
+    "request": "^2.88.0"
+  }
+}
