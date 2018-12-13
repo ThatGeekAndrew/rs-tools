@@ -45,31 +45,49 @@
 
         <section class="jumbotron jumbotron-fluid text-center">
             <div class="container">
-                <form ng-submit="callAPI(username)" class="input-group input-group-lg">
-                    <div class="input-group-prepend">
-                        <i class="fas fa-trophy"></i>
-                        <span class="input-group-text mr-3">OSRS Hiscores</span>
-                    </div>
-                    <input ng-model="username" type="text" class="form-control" placeholder="Lookup OSRS Username" aria-label="Lookup OSRS Username">
-                    <div class="input-group-append">
-                        
-                        <button type="submit" class="btn btn-lg btn-raised btn-primary px-3">Lookup</button>
-                        <button type="button" class="btn btn-lg btn-outline-primary px-2 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <h6 class="dropdown-header">Game</h6>
-                            <a class="dropdown-item" href="#">OSRS</a>
-                            <a class="dropdown-item" href="#">RS3</a>
-                            <div role="separator" class="dropdown-divider"></div>
-                            <h6 class="dropdown-header">Services</h6>
-                            <a class="dropdown-item" href="#">Exchange</a>
-                            <a class="dropdown-item" href="#">Hiscores</a>
-                            <a class="dropdown-item" href="#">Beastiary</a>
+                <form class="mb-0" ng-submit="queryRunescape(username)">
+                    <div class="input-group input-group-lg">
+                        <div class="input-group-prepend">
+                            <i class="fas fa-trophy"></i>
+                            <span class="input-group-text mr-3">{{ gameVersion }} {{ serviceType }}</span>
+                        </div>
+                        <input ng-model="username" type="text" class="form-control" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-lg btn-raised btn-primary px-3">Lookup</button>
                         </div>
 
                     </div>
                 </form>
+                <div class="row mt-2">
+                    <div class="col-12 col-md-6 text-left">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input ng-model="gameVersion" value="OSRS" type="radio" id="gameRadio1" name="gameVersion" class="custom-control-input" checked>
+                            <label class="custom-control-label" for="gameRadio1">OSRS</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input ng-model="gameVersion" value="RS3" type="radio" id="gameRadio2" name="gameVersion" class="custom-control-input">
+                            <label class="custom-control-label" for="gameRadio2">RS3</label>
+                        </div>
+                    </div>
+                    
+
+                    <div class="col-12 col-md-6 text-right">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input ng-model="serviceType" value="Hiscores" type="radio" id="serviceRadio1" name="serviceType" class="custom-control-input" checked>
+                            <label class="custom-control-label" for="serviceRadio1">Hiscores</label>
+                        </div>
+    
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input ng-model="serviceType" value="Exchange" type="radio" id="serviceRadio2" name="serviceType" class="custom-control-input">
+                            <label class="custom-control-label" for="serviceRadio2">Exchange</label>
+                        </div>
+    
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input ng-model="serviceType" value="Bestiary" type="radio" id="serviceRadio3" name="serviceType" class="custom-control-input">
+                            <label class="custom-control-label" for="serviceRadio3">Bestiary</label>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </section>
@@ -81,17 +99,21 @@
                         <span class="rs-loading">Loading - Please Wait.</span>
                     </div>
                 </div>
-                <h2 ng-if="highscores">{{ lookedup }}:</h2>
                 
                 <div class="row">
-                    <div class="col-3" ng-repeat="skill in highscores" title="XP {{ skill.xp | number }}">
-                        <img width="20px" ng-src="https://oldschool.runescape.wiki/images/8/86/Agility_icon.png" alt="">
-                        <strong>{{ skill.level }}</strong>
-                        <span ng-repeat-end>{{ skill.name }}</span>
+                    <div class="col-6 mx-auto">
+                    <h2 ng-if="highscores">{{ lookedup }}</h2>
+                        <div class="row">
+                            <div class="col-4 text-center" ng-repeat="skill in highscores" title="{{ skill.name }} XP: {{ skill.xp | number }}">
+                                <img width="20px" ng-src="/static/images/skills/{{ skill.name }}_icon.webp" alt="">
+                                <strong>{{ skill.level }}</strong>
+                                <p ng-repeat-end>{{ skill.name }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <pre>{{ highscores.skills | json }}</pre>
+                <pre class="h-25">{{ highscores | json }}</pre>
                 <hr>
             </div>
         </section>

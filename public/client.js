@@ -12,27 +12,29 @@ angular
   .controller('OSRSLookupCtrl', [
     '$scope', 'dataService',
     function OSRSLookupCtrl($scope, dataService) {
+      // to do: check local storage for prefrences
+      $scope.gameVersion = 'OSRS';
+      $scope.serviceType = 'Hiscores';
 
-      $scope.callAPI = function(rsn) {
-        $scope.querying = true;
+      $scope.queryRunescape = function(rsn) {
+        callAPI(rsn);
+      }
 
+      function callAPI(rsn) {
         if (rsn && rsn != $scope.lookedup) {
-
+          $scope.querying = true;
           $scope.highscores = null;
           $scope.lookedup = rsn;
 
-          dataService.get(rsn).then(
-            function(resp) {
+          dataService.get(rsn).then(function(resp) {
               console.log(resp);
-              
               var skills = [];
 
               angular.forEach(resp.data.Skills, function(value, key) {
-                var skill = {};
-
-                skill.name = key;
-
-                skill = {...skill, ...value};
+                var skill = {
+                  name: key,
+                  ...value
+                };
                 
                 this.push(skill);
 
@@ -40,18 +42,11 @@ angular
 
               $scope.highscores = skills;
             }
-          ); // end dataService
-          
-        } else {
-          if (rsn) {
-            console.log('this dipshit is trying to spam the lookup button');
-          } else {
-            console.log('this dipshit is trying to lookup no one');
-          }
+          ).finally(function() {
+            $scope.querying = false;
+          }); // end dataService
         }
-
-        $scope.querying = false;
       }
-      
+
     }
   ])

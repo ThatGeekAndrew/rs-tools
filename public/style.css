@@ -1,5 +1,6 @@
 body {
     min-height: 100vh;
+    margin-bottom: 10vh;
 }
 
 .querying-block {
@@ -16,4 +17,17 @@ body {
     background: black;
     box-shadow: 0 0 15px black;
     border: 1px solid white;
+}
+
+.custom-file-control, .form-control, input::placeholder, label {
+    line-height: 1.5;
+}
+
+footer {
+    padding: 1rem 0;
+    background: rgba(255, 255, 255, 0.75);
+}
+
+footer p {
+    margin: 0;
 }
