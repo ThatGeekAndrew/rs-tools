@@ -1,5 +1,5 @@
 {
-  "name": "highscores",
+  "name": "rs-tools",
   "version": "1.0.0",
   "description": "The API and website for an Old School Runescape Tool.",
   "main": "server.js",
@@ -7,13 +7,31 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "",
+  "author": "Andrew Alsante",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "osrs": "^1.0.1",
     "path": "^0.12.7",
-    "request": "^2.88.0"
-  }
+    "request": "^2.88.0",
+    "runescape-api": "^1.0.9"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geeksmarter/rs-tools.git"
+  },
+  "keywords": [
+    "rs",
+    "osrs",
+    "runescape",
+    "express",
+    "angularjs",
+    "bootstrap"
+  ],
+  "bugs": {
+    "url": "https://github.com/geeksmarter/rs-tools/issues"
+  },
+  "homepage": "https://github.com/geeksmarter/rs-tools#readme"
 }
