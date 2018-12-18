@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 
-<body ng-app="testApp">
+<body ng-app="rsTools" class="ng-cloak">
     <header class="sticky-top">
         <div class="collapse bg-dark" id="navbarHeader">
             <div class="container">
@@ -30,7 +30,7 @@
         <div class="navbar navbar-dark bg-dark shadow-sm">
             <div class="container d-flex justify-content-between">
                 <a href="#" class="navbar-brand d-flex align-items-center">
-                    <img class="mr-2" src="https://oldschool.runescape.wiki/images/b/bd/Stats_icon.png" alt="">
+                    <img class="mr-2" ng-src="/static/images/skills/osrs-overall-icon.webp" alt="">
                     <strong>RS Toolkit</strong>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
@@ -41,15 +41,43 @@
         </div>
     </header>
 
-    <main role="main" ng-controller="OSRSLookupCtrl">
+    <main role="main" ng-controller="RSLookupController">
 
         <section class="jumbotron jumbotron-fluid text-center">
             <div class="container">
                 <form class="mb-0" ng-submit="queryRunescape(username)">
                     <div class="input-group input-group-lg">
                         <div class="input-group-prepend">
-                            <i class="fas fa-trophy"></i>
-                            <span class="input-group-text mr-3">{{ gameVersion }} {{ serviceType }}</span>
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle px-3 mr-2"
+                                type="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                {{ gameVersion }}
+                            </button>
+                            <div class="dropdown-menu">
+                                <button type="button" class="dropdown-item" ng-click="setVersion('osrs')">
+                                    <i class="material-icons text-primary mr-2">
+                                        <span ng-if="gameVersion != 'osrs'">
+                                            radio_button_unchecked
+                                        </span>
+                                        <span ng-if="gameVersion == 'osrs'">
+                                            radio_button_checked
+                                        </span>
+                                    </i>
+                                    Old School
+                                </button>
+                                <button type="button" class="dropdown-item" ng-click="setVersion('rs')">
+                                    
+                                        <i class="material-icons text-primary mr-2">
+                                            <span ng-if="gameVersion != 'rs'">
+                                                radio_button_unchecked
+                                            </span>
+                                            <span ng-if="gameVersion == 'rs'">
+                                                radio_button_checked
+                                            </span>
+                                        </i>
+                                    RuneScape
+                                </button>
+                            </div>
                         </div>
                         <input ng-model="username" type="text" class="form-control" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">
@@ -58,33 +86,27 @@
 
                     </div>
                 </form>
-                <div class="row mt-2">
-                    <div class="col-12 col-md-6 text-left">
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input ng-model="gameVersion" value="OSRS" type="radio" id="gameRadio1" name="gameVersion" class="custom-control-input" checked>
-                            <label class="custom-control-label" for="gameRadio1">OSRS</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input ng-model="gameVersion" value="RS3" type="radio" id="gameRadio2" name="gameVersion" class="custom-control-input">
-                            <label class="custom-control-label" for="gameRadio2">RS3</label>
-                        </div>
-                    </div>
+                <div class="d-flex justify-content-around mt-2">
                     
-
-                    <div class="col-12 col-md-6 text-right">
+                    <div class="d-flex flex-column flex-sm-row justify-content-around">
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input ng-model="serviceType" value="Hiscores" type="radio" id="serviceRadio1" name="serviceType" class="custom-control-input" checked>
-                            <label class="custom-control-label" for="serviceRadio1">Hiscores</label>
+                            <input ng-model="hiscoreType" value="normal" type="radio" id="normal-hiscores" name="hiscoreType" class="custom-control-input">
+                            <label class="custom-control-label" for="normal-hiscores">Normal</label>
                         </div>
     
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input ng-model="serviceType" value="Exchange" type="radio" id="serviceRadio2" name="serviceType" class="custom-control-input">
-                            <label class="custom-control-label" for="serviceRadio2">Exchange</label>
+                            <input ng-model="hiscoreType" value="ironman" type="radio" id="ironman-hiscores" name="hiscoreType" class="custom-control-input">
+                            <label class="custom-control-label" for="ironman-hiscores">Ironman</label>
                         </div>
     
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input ng-model="serviceType" value="Bestiary" type="radio" id="serviceRadio3" name="serviceType" class="custom-control-input">
-                            <label class="custom-control-label" for="serviceRadio3">Bestiary</label>
+                            <input ng-model="hiscoreType" value="ultimate" type="radio" id="ultimate-hiscores" name="hiscoreType" class="custom-control-input">
+                            <label class="custom-control-label" for="ultimate-hiscores">Ultimate</label>
+                        </div>
+    
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input ng-model="hiscoreType" value="hardcore" type="radio" id="hardcore-hiscores" name="hiscoreType" class="custom-control-input">
+                            <label class="custom-control-label" for="hardcore-hiscores">Hardcore</label>
                         </div>
                     </div>
                 </div>
@@ -94,6 +116,11 @@
 
         <section>
             <div class="container">
+                <div class="text-center my-5 py-5" ng-if="!highscores && !querying">
+                    <img src="/static/images/maxfirecape.gif" alt="">
+                    <p>Type a username above to begin!</p>
+                </div>
+                
                 <div class="querying-block" ng-if="querying">
                     <div>
                         <span class="rs-loading">Loading - Please Wait.</span>
@@ -104,16 +131,19 @@
                     <div class="col-6 mx-auto">
                     <h2 ng-if="highscores">{{ lookedup }}</h2>
                         <div class="row">
-                            <div class="col-4 text-center" ng-repeat="skill in highscores" title="{{ skill.name }} XP: {{ skill.xp | number }}">
-                                <img width="20px" ng-src="/static/images/skills/{{ skill.name }}_icon.webp" alt="">
+                            <div class="col-4 text-center"
+                                ng-repeat="skill in highscores"
+                                title="{{ skill.name | capitalize }} XP: {{ skill.exp | number }}&#10;Rank: {{ skill.rank | number }}"
+                                ng-if="!$last">
+                                <img ng-src="/static/images/skills/{{ highscores.version }}-{{ skill.name }}-icon.webp" alt="{{ skill.name }} icon">
                                 <strong>{{ skill.level }}</strong>
-                                <p ng-repeat-end>{{ skill.name }}</p>
+                                <p ng-repeat-end>{{ skill.name | capitalize }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <pre class="h-25">{{ highscores | json }}</pre>
+                <!-- <pre class="h-25">{{ highscores | json }}</pre> -->
                 <hr>
             </div>
         </section>

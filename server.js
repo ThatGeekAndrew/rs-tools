@@ -1,5 +1,5 @@
 var express = require('express');
-const osrs = require('osrs');
+var rsapi = require('runescape-api');
 // var request = require('request');
 var bodyParser = require('body-parser');
 var path = require('path');
@@ -17,7 +17,7 @@ app.use('/static', express.static(path.join(__dirname, 'public')));
 // middleware to use for all requests
 app.use(function(req, res, next) {
     // do logging
-    console.log('Something is happening.');
+    console.log('Something is happening...');
     next(); // make sure we go to the next routes and don't stop here
 });
 
@@ -25,49 +25,27 @@ app.use(function(req, res, next) {
 app.get('/', function (req, res, next) {
     res.sendFile(path.join(__dirname + '/index.html'));
     console.log('Homepage visited');
-})
+});
 
-app.get('/api/hiscores/:player', function (req, res, next) {
+app.get('/api/osrs/hiscores/:player', function (req, res, next) {
     if (req.params.player) {
-
-        osrs.hiscores.getPlayer(req.params.player).then(player => {
-            console.log(player);
+        rsapi.osrs.hiscores.player(req.params.player).then(player => {
             res.status(200).send(player);
-        }).catch((err) => {
-            res.status(400).send({"Error": "There aren't any players with that name."});
-        })
-
+        }).catch(console.error);
     } else {
-        returnres.status(400).send({"Error": "It appears that you are missing a name."});
+        res.status(400).send({"Error": "It appears that you are missing a name."});
     }
-})
+});
 
-app.get('/runescape/:version/hiscores/:player', function (req, res, next) {
+app.get('/api/rs/hiscores/:player', function (req, res, next) {
     if (req.params.player) {
-        const version = parseInt(req.params.version, 10);
-        switch (req.params.version) {
-            case rs:
-                osrs.hiscores.getPlayer(req.params.player).then(player => {
-                    console.log(player);
-                    return res.status(200).send(player);
-                })
-                break;
-
-            case osrs:
-                osrs.hiscores.getPlayer(req.params.player).then(player => {
-                    console.log(player);
-                    return res.status(200).send(player);
-                })
-                break;
-        
-            default:
-                break;
-        }
-
+        rsapi.rs.hiscores.player(req.params.player).then(player => {
+            res.status(200).send(player);
+        }).catch(console.error);
     } else {
-        returnres.status(400).send({"Error": "It appears that you are missing a name."});
+        res.status(400).send({"Error": "It appears that you are missing a name."});
     }
-})
+});
 
 // For API requests without any wrapper -- must enable request at top.
 //    request.get({
