@@ -39,6 +39,8 @@ angular
             case 'rs':
               apiService.rs(rsn).then(resp => {
                 handleResponse(resp);
+              }).catch(error => {
+                handleError(error);
               }).finally(function() {
                 $scope.querying = false;
               });
@@ -61,13 +63,13 @@ angular
       }
 
       function handleError(error) {
-        console.log('error');
-        console.log(error.data.Error)
-        $scope.error = error.data.Error;
+        // console.log('error');
+        console.log(error.data.error);
+        $scope.error = error.data.error;
       }
 
       function handleResponse(resp) {
-        console.log('success');
+        // console.log('success');
         console.log(resp);
         var skills = [];
         var activities = [];
@@ -108,7 +110,6 @@ angular
           activities: activities
         };
       }
-
     }
   ])
   .filter('capitalize', function() {
