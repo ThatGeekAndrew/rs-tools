@@ -33,9 +33,10 @@ app.get('/api/osrs/hiscores/:player/', function (req, res, next) {
             req.params.player
         ).then(player => {
             res.status(200).send(player);
+            console.log({"Hiscores": req.params.player + " was looked up on the osrs hiscores."});
         }).catch(error => {
-            res.status(400).send({"Error": "It appears that " + req.params.player + " isn't on this hiscores list."});
-            console.error({"Error": "It appears that " + req.params.player + " isn't on the highscores list."});
+            res.status(400).send({"Error": "It appears that " + req.params.player + " is not on this hiscores list."});
+            console.error({"Error": "It appears that " + req.params.player + " is not on the hiscores list."});
         });
     } else {
         res.status(400).send({"Error": "It appears that you are missing a name."});
@@ -44,44 +45,43 @@ app.get('/api/osrs/hiscores/:player/', function (req, res, next) {
 
 app.get('/api/osrs/hiscores/:player/:type', function (req, res, next) {
     if (req.params.player) {
-
         switch (req.params.type) {
             case 'ironman':
-                // console.log('osrs ironman hiscores hit');
                 rsapi.osrs.hiscores.player(
                     req.params.player, req.params.type
                 ).then(player => {
                     res.status(200).send(player);
+                    console.log({"Hiscores": req.params.player + " was looked up on the osrs ironman hiscores."});
                 }).catch(error => {
-                    res.status(400).send({"Error": "It appears that " + req.params.player + " isn't on the " + req.params.type + " hiscores list."});
-                    console.error({"Error": "It appears that " + req.params.player + " isn't on the " + req.params.type + " hiscores list."});
+                    res.status(400).send({"Error": "It appears that " + req.params.player + " is not on the " + req.params.type + " hiscores list."});
+                    console.error({"Error": "It appears that " + req.params.player + " is not on the " + req.params.type + " hiscores list."});
                 });
                 break;
             case 'ultimate':
-                // console.log('osrs ultimate hiscores hit');
                 rsapi.osrs.hiscores.player(
                     req.params.player, req.params.type
                 ).then(player => {
                     res.status(200).send(player);
+                    console.log({"Hiscores": req.params.player + " was looked up on the osrs ultimate ironman hiscores."});
                 }).catch(error => {
-                    res.status(400).send({"Error": "It appears that " + req.params.player + " isn't on the " + req.params.type + " hiscores list."});
-                    console.error({"Error": "It appears that " + req.params.player + " isn't on the " + req.params.type + " hiscores list."});
+                    res.status(400).send({"Error": "It appears that " + req.params.player + " is not on the " + req.params.type + " hiscores list."});
+                    console.error({"Error": "It appears that " + req.params.player + " is not on the " + req.params.type + " hiscores list."});
                 });
                 break;
             case 'hardcore':
-                // console.log('osrs hardcore hiscores hit');
                 rsapi.osrs.hiscores.player(
                     req.params.player, req.params.type
                 ).then(player => {
                     res.status(200).send(player);
+                    console.log({"Hiscores": req.params.player + " was looked up on the osrs hardcore ironman hiscores."});
                 }).catch(error => {
-                    res.status(400).send({"Error": "It appears that " + req.params.player + " isn't on the " + req.params.type + " hiscores list."});
-                    console.error({"Error": "It appears that " + req.params.player + " isn't on the " + req.params.type + " hiscores list."});
+                    res.status(400).send({"Error": "It appears that " + req.params.player + " is not on the " + req.params.type + " hiscores list."});
+                    console.error({"Error": "It appears that " + req.params.player + " is not on the " + req.params.type + " hiscores list."});
                 });
                 break;
     
             default:
-                res.status(400).send({"Error": "It appears that " + req.params.player + " isn't on this hiscores list."});
+                res.status(400).send({"Error": "It appears that " + req.params.player + " is not on this hiscores list."});
                 break;
         }
     } else {
@@ -95,8 +95,9 @@ app.get('/api/rs/hiscores/:player/', function (req, res, next) {
             req.params.player
         ).then(player => {
             res.status(200).send(player);
+            console.log({"Hiscores": req.params.player + " was looked up on the rs hiscores."});
         }).catch(error => {
-            res.status(400).send({"Error": "It appears that " + req.params.player + " isn't on this hiscores list."});
+            res.status(400).send({"Error": "It appears that " + req.params.player + " is not on this hiscores list."});
             console.error(error);
         });
     } else {
@@ -108,41 +109,41 @@ app.get('/api/rs/hiscores/:player/:type', function (req, res, next) {
     if (req.params.player) {
         switch (req.params.type) {
             case 'ironman':
-                // console.log('osrs ironman hiscores hit');
                 rsapi.rs.hiscores.player(
                     req.params.player, req.params.type
                 ).then(player => {
                     res.status(200).send(player);
+                    console.log({"Hiscores": req.params.player + " was looked up on the rs ironman hiscores."});
                 }).catch(error => {
-                    res.status(400).send({"Error": "It appears that " + req.params.player + " isn't on the " + req.params.type + " hiscores list."});
-                    console.error({"Error": "It appears that " + req.params.player + " isn't on the " + req.params.type + " hiscores list."});
+                    res.status(400).send({"Error": "It appears that " + req.params.player + " is not on the " + req.params.type + " hiscores list."});
+                    console.error({"Error": "It appears that " + req.params.player + " is not on the " + req.params.type + " hiscores list."});
                 });
                 break;
             case 'ultimate':
-                // console.log('osrs ultimate hiscores hit');
                 rsapi.rs.hiscores.player(
                     req.params.player, req.params.type
                 ).then(player => {
                     res.status(200).send(player);
+                    console.log({"Hiscores": req.params.player + " was looked up on the rs hardcore ultimate hiscores."});
                 }).catch(error => {
-                    res.status(400).send({"Error": "It appears that " + req.params.player + " isn't on the " + req.params.type + " hiscores list."});
-                    console.error({"Error": "It appears that " + req.params.player + " isn't on the " + req.params.type + " hiscores list."});
+                    res.status(400).send({"Error": "It appears that " + req.params.player + " is not on the " + req.params.type + " hiscores list."});
+                    console.error({"Error": "It appears that " + req.params.player + " is not on the " + req.params.type + " hiscores list."});
                 });
                 break;
             case 'hardcore':
-                // console.log('osrs hardcore hiscores hit');
                 rsapi.rs.hiscores.player(
                     req.params.player, req.params.type
                 ).then(player => {
                     res.status(200).send(player);
+                    console.log({"Hiscores": req.params.player + " was looked up on the rs hardcore ironman hiscores."});
                 }).catch(error => {
-                    res.status(400).send({"Error": "It appears that " + req.params.player + " isn't on the " + req.params.type + " hiscores list."});
-                    console.error({"Error": "It appears that " + req.params.player + " isn't on the " + req.params.type + " hiscores list."});
+                    res.status(400).send({"Error": "It appears that " + req.params.player + " is not on the " + req.params.type + " hiscores list."});
+                    console.error({"Error": "It appears that " + req.params.player + " is not on the " + req.params.type + " hiscores list."});
                 });
                 break;
     
             default:
-                res.status(400).send({"Error": "It appears that " + req.params.player + " isn't on this hiscores list."});
+                res.status(400).send({"Error": "It appears that " + req.params.player + " is not on this hiscores list."});
                 break;
         }
     } else {

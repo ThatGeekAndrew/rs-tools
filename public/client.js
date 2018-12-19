@@ -27,7 +27,8 @@ angular
       $scope.queryRunescape = function(rsn) {
         if (rsn) {
           $scope.querying = true;
-          $scope.highscores = null;
+          $scope.hiscore = null;
+          $scope.error = null;
           $scope.lookedup = rsn;
 
           if($scope.hiscoreType) {
@@ -46,6 +47,8 @@ angular
             case 'osrs':
               apiService.osrs(rsn).then(resp => {
                 handleResponse(resp);
+              }).catch(error => {
+                handleError(error);
               }).finally(function() {
                 $scope.querying = false;
               });
@@ -57,9 +60,26 @@ angular
         }
       }
 
+      function handleError(error) {
+        console.log('error');
+        console.log(error.data.Error)
+        $scope.error = error.data.Error;
+      }
+
       function handleResponse(resp) {
+        console.log('success');
+        console.log(resp);
         var skills = [];
+        var activities = [];
   
+        /** Successful resp.data object
+         * {
+         *  skills: { ... },
+         *  activities: { ... },
+         *  ...
+         * }
+         */
+
         angular.forEach(resp.data.skills, function(value, key) {
           var skill = {
             name: key,
@@ -69,8 +89,24 @@ angular
           this.push(skill);
   
         }, skills);
+
+        angular.forEach(resp.data.activities, function(value, key) {
+          var activity = {
+            name: key,
+            ...value
+          };
+          
+          this.push(activity);
   
-        $scope.highscores = { version: $scope.gameVersion, ...skills };
+        }, activities);
+  
+        $scope.hiscore = {
+          rsn: $scope.lookedup,
+          version: $scope.gameVersion,
+          type: $scope.hiscoreType,
+          skills: skills,
+          activities: activities
+        };
       }
 
     }

@@ -4,7 +4,6 @@ body {
 }
 
 .querying-block {
-    min-height: 25vh;
     display: flex;
     text-align: center;
     justify-content: center;
@@ -30,4 +29,17 @@ footer {
 
 footer p {
     margin: 0;
+}
+
+.jumbotron {
+    background: linear-gradient(180deg, slateblue, darkslategray);
+    background-size: 400% 400%;
+
+    animation: backgroundGradient 36s ease infinite;
+}
+
+@keyframes backgroundGradient { 
+    0%{background-position:0% 27%}
+    50%{background-position:100% 74%}
+    100%{background-position:0% 27%}
 }

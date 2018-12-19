@@ -48,7 +48,7 @@
                 <form class="mb-0" ng-submit="queryRunescape(username)">
                     <div class="input-group input-group-lg">
                         <div class="input-group-prepend">
-                            <button type="button" class="btn btn-outline-secondary dropdown-toggle px-3 mr-2"
+                            <button type="button" class="btn btn-outline-primary dropdown-toggle px-3 mr-2"
                                 type="button" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 {{ gameVersion }}
@@ -79,7 +79,7 @@
                                 </button>
                             </div>
                         </div>
-                        <input ng-model="username" type="text" class="form-control" placeholder="Search" aria-label="Search">
+                        <input ng-model="username" type="text" class="form-control text-primary" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-lg btn-raised btn-primary px-3">Lookup</button>
                         </div>
@@ -88,7 +88,7 @@
                 </form>
                 <div class="d-flex justify-content-around mt-2">
                     
-                    <div class="d-flex flex-column flex-sm-row justify-content-around">
+                    <div class="d-flex flex-column flex-sm-row justify-content-around text-primary">
                         <div class="custom-control custom-radio custom-control-inline">
                             <input ng-model="hiscoreType" value="" type="radio" id="normal-hiscores" name="hiscoreType" class="custom-control-input">
                             <label class="custom-control-label" for="normal-hiscores">Normal</label>
@@ -116,34 +116,44 @@
 
         <section>
             <div class="container">
-                <div class="text-center my-5 py-5" ng-if="!highscores && !querying">
-                    <img src="/static/images/maxfirecape.gif" alt="">
+                <div class="text-center my-5 py-5" ng-if="!hiscore && !querying && !error">
+                    <img ng-src="/static/images/maxfirecape.gif" alt="Player wearing a max cape of accomplishment.">
                     <p>Type a username above to begin!</p>
                 </div>
                 
-                <div class="querying-block" ng-if="querying">
+                <div class="querying-block my-5 py-5" ng-if="querying">
                     <div>
                         <span class="rs-loading">Loading - Please Wait.</span>
                     </div>
                 </div>
+
+                <div class="text-center my-5 py-5" ng-if="error">
+                    <img src="/static/images/angry-enhanced.gif" alt="Player wearing fancy clothing throwing a tantrum.">
+                    <p class="text-danger"><strong>Error: </strong>{{ error }}</p>
+                </div>
                 
                 <div class="row">
                     <div class="col-6 mx-auto">
-                    <h2 ng-if="highscores">{{ lookedup }}</h2>
+                    <h2 ng-if="hiscore">
+                        {{ hiscore.rsn }}
+                        <small class="text-muted">on <span class="text-uppercase">{{ hiscore.version }}</span></small>
+                    </h2>
                         <div class="row">
                             <div class="col-4 text-center"
-                                ng-repeat="skill in highscores"
-                                title="{{ skill.name | capitalize }} XP: {{ skill.exp | number }}&#10;Rank: {{ skill.rank | number }}"
-                                ng-if="!$last">
-                                <img ng-src="/static/images/skills/{{ highscores.version }}-{{ skill.name }}-icon.webp" alt="{{ skill.name }} icon">
+                                ng-repeat="skill in hiscore.skills"
+                                title="{{ skill.name | capitalize }} XP: {{ skill.exp | number }}&#10;Rank: {{ skill.rank | number }}">
+                                <img ng-src="/static/images/skills/{{ hiscore.version }}-{{ skill.name }}-icon.webp" alt="{{ skill.name }} icon">
                                 <strong>{{ skill.level }}</strong>
                                 <p ng-repeat-end>{{ skill.name | capitalize }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- <pre class="h-25">{{ highscores | json }}</pre> -->
+                <div ng-if="hiscore">
+                    <hr>
+                    <pre class="h-25 bg-light">{{ hiscore | json }}</pre>
+                </div>
+                
                 <hr>
             </div>
         </section>
