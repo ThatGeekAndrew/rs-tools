@@ -18,7 +18,7 @@ angular
     function RSLookupController($scope, apiService) {
       // to do: get prefrences from url structure or localstorage
       $scope.gameVersion = 'osrs';
-      $scope.hiscoreType = 'normal';
+      $scope.hiscoreType = '';
 
       $scope.setVersion = function(vers) {
         $scope.gameVersion = vers;
@@ -29,6 +29,10 @@ angular
           $scope.querying = true;
           $scope.highscores = null;
           $scope.lookedup = rsn;
+
+          if($scope.hiscoreType) {
+            rsn = rsn + '/' + $scope.hiscoreType;
+          }
 
           switch ($scope.gameVersion) {
             case 'rs':
